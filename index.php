@@ -5,7 +5,8 @@ use Manthan\Webcompile\WebcompileMaker;
 if(isset($_POST['program'])) {
   $compiler = new WebcompileMaker();
   $args = explode(',', $_POST['inputs']);
-  print $compiler->type('c')->with($_POST['program'], $args)->executeProgram();
+  $result = $compiler->type('c')->with($_POST['program'], $args)->executeProgram();
+  print_r($result);
 }
 ?>
 

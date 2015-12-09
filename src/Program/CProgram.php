@@ -20,7 +20,7 @@ class CProgram extends Program {
     }
 
     protected function getRunCommand() {
-        return './a.out';
+        return './a.out 2>&1';
     }
 
 

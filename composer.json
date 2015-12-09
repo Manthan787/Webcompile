@@ -1,6 +1,6 @@
 {
     "name": "manthan/webcompile",
-    "description": "Allows you to compile C, C++, Java programs via HTTP!",
+    "description": "Allows you to compile C, C++, Java programs on your browser!",
     "license": "MIT",
     "authors": [
         {

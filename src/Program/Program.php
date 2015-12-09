@@ -24,7 +24,7 @@ abstract class Program implements ProgramInterface {
             return $this->run();
         }
         else {
-            return false;
+            return $this->output;
         }
     }
 
@@ -32,7 +32,7 @@ abstract class Program implements ProgramInterface {
         $command = $this->compiler." ".escapeshellarg($this->file->getFileName()).' 2>&1';
         exec($command, $output, $return_value);
         if($return_value !== 0) {
-            $this->display($output);
+            $this->setOutput($output);
             return false;
         }
         return true;
@@ -40,14 +40,15 @@ abstract class Program implements ProgramInterface {
 
 
     protected function run() {
+      $output = array();
       $desc =  array(
-        0 => array('pipe', 'r'),
-        1 => array('pipe', 'w'),
-        2 => array('pipe', 'w')
+          0 => array('pipe', 'r'),
+          1 => array('pipe', 'w'),
+          2 => array('pipe', 'w')
       );
       flush();
-
       $process = proc_open($this->getRunCommand(), $desc, $pipes);
+
       if(!empty($this->args)) {
         foreach($this->args as $arg) {
           fwrite($pipes[0], $arg."\n");
@@ -62,14 +63,16 @@ abstract class Program implements ProgramInterface {
       }
       fclose($pipes[1]);
       $stderr = stream_get_contents($pipes[2]);
+      fclose($pipes[2]);
       proc_close($process);
+
       if($this->hasError($stderr)) {
-          return $stderr;
+          $this->setOutput($stderr);
       }
       else {
-          $this->display($output);
+          $this->setOutput($output);
       }
-      return true;
+      return $this->output;
     }
 
     protected function hasError($output) {
@@ -79,10 +82,13 @@ abstract class Program implements ProgramInterface {
         return true;
     }
 
-    protected function display($output) {
-        foreach($output as $result) {
-            echo $result."<br/>";
-        }
+    protected function setOutput($op) {
+      if(is_string($op)) {
+        $this->output[] = $op;
+      }
+      else {
+        $this->output = $op;
+      }
     }
 
 }

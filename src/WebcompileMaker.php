@@ -20,8 +20,9 @@ class WebcompileMaker {
     }
 
     public function executeProgram() {
-        $this->program->execute();
+        $response = $this->program->execute();
         $this->program->destroy();
+        return $response;
     }
 
 
