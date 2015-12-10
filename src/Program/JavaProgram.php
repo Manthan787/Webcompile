@@ -23,6 +23,4 @@ class JavaProgram extends Program {
         return explode('.', $full)[0];
     }
 }
-
-
 ?>

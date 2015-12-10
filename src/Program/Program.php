@@ -90,8 +90,6 @@ abstract class Program implements ProgramInterface {
         $this->output = $op;
       }
     }
-
 }
-
 
 ?>

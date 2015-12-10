@@ -24,9 +24,5 @@ class WebcompileMaker {
         $this->program->destroy();
         return $response;
     }
-
-
 }
-
-
 ?>
